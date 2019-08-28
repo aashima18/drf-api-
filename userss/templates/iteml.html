@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<body>
+    <form  method = "POST" id="login">
+      {% csrf_token %}
+
+        <div class="form-group">
+          <label for="title">Title:</label>
+          <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" required>
+        </div>
+
+        <div class="form-group">
+          <label for="description">description:</label>
+          <input type="description" class="form-control" id="description" placeholder="Enter description" name="description">
+        </div>
+
+
+        <button type="submit" id="submit" class="btn btn-default">Submit</button>
+      </form>
+      <script type="text/javascript"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+       <script>
+          $('#login').submit(function(e) {
+                e.preventDefault(e);
+
+                alert("done");
+                $.ajax({
+                    url: 'http://127.0.0.1:8000/api/item',
+                    type: 'POST',
+                    data:{
+                       "title":$('#title').val(),
+                       "description":$('#description').val()
+                      },
+                    headers:{
+                          "Authorization":"Token " + localStorage.getItem("token")
+                        },
+                    success:function(data) {
+                      alert("Hey");
+                
+
+                    },
+                    error:function(errorThrown){
+                      alert('Error');
+                      
+                    }
+                });
+          });      
+                
+        </script>
+      </body>
+     
+    </head>
+
+    </html>

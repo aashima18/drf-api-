@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <title>students api</title>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ </head>
+<body>
+<div>
+   <button class="apireq">click me </button> 
+</div>
+<div id="jsonresp" style="margin-top: 100px">
+   <p><label> Title :</label> <span id="title"></span></p>
+   <p><label> description:</label> <span id="description"></span></p>
+   <p><label> user:</label> <span id="user"></span></p>
+<a href = "{% url 'indexl' %}"> add note</a>
+<button id="logout">logout</button> 
+</div>
+    <script type="text/javascript"></script>
+    <script>
+    $('.apireq').click( function(e) {
+          e.preventDefault(e);
+    $.ajax({
+             url : "http://127.0.0.1:8000/api/item",
+             dataType: "json",
+             headers:{
+               "Authorization":"Token " + localStorage.getItem("token")
+             },
+             success : function (data) {
+                     for(i=0;i<data.length;i++)
+                     {
+                      $('#title').text( data[i].title)
+                      
+                      $('#description').text( data[i].description);
+                     }
+                      $('#user').text( data[0].user_s);
+                    
+                    }
+                 });
+             });
+
+
+    $('#logout').click( function(e) {
+          e.preventDefault(e);
+    $.ajax({
+             url : "http://127.0.0.1:8000/api/logout",
+             type:'POST',
+             headers:{
+               "Authorization":"Token " + localStorage.getItem("token")
+             },
+             success : function (data) {
+                      localStorage.clear();
+                      alert('logged out');
+                    
+                    },
+              error:function(errorThrown){
+                alert('Error');
+              }      
+                 });
+             });         
+             </script>
+
+
+
+</body>
+</html>
+
+    
